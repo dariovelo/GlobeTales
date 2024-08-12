@@ -9,5 +9,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/users", require("../backend/routes/userRoutes"));
+app.use("/api/user", require("../backend/routes/userRoutes"));
+app.use("/api/story", require("../backend/routes/storyRoutes"));
 app.listen(port, () => console.log(`Server listening on port ${port}`));
