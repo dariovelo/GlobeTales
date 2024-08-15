@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #24252a;
+}
+
+li,
+a,
+button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #edf0f1;
+  text-decoration: none;
+}
+
+header {
+  display: flex;
+  justify-content: flex-end; /* moves all the items on the right end */
+  align-items: center;
+  padding: 30px 10%;
+}
+
+.logo {
+  font-family: "Montserrat", sans-serif;
+  font-size: 36px; /* Adjust the font size to fit your design */
+  font-weight: 700; /* Bold text */
+  color: #f0c040; /* Gold color for contrast */
+  cursor: pointer;
+  text-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2); /* Multi-layered shadow for depth */
+  background: linear-gradient(
+    45deg,
+    #f0c040,
+    #a8c0ff
+  ); /* Gradient background for dreamy effect */
+  -webkit-background-clip: text; /* Clip background to text */
+  -webkit-text-fill-color: transparent; /* Make text fill color transparent to show gradient */
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease; /* Smooth transition effects */
+  margin-right: auto; /* sets the logo to the left */
+}
+
+.nav__links {
+  list-style: none; /* removes the listing dots */
+}
+
+.nav__links li {
+  display: inline-block; /* the list items were one over the over now they're side by side */
+  padding: 0px 20px; /* 20px space between left and right */
+}
+
+.nav__links li a {
+  transition: color 0.3s ease; /* smooth transition effect */
+}
+
+.nav__links li a:hover {
+  color: #f0c040; /* Gold color for hover effect */
+}
+
+.button {
+  font-family: "Montserrat", sans-serif; /* Consistent font */
+  font-size: 16px; /* Adjust font size */
+  font-weight: 500; /* Medium font weight */
+  padding: 9px 25px; /* Padding for buttons */
+  border: 2px solid #24252a; /* Border color */
+  border-radius: 50px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease; /* Smooth transitions */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline from links */
+  background-color: #d1a736; /* Default gold color */
+  color: #24252a; /* Dark text color */
+}
+
+/* Hover effect for all buttons */
+.button:hover {
+  background-color: #9e7227; /* Darker gold color for hover effect */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+/* Specific button class for custom styles */
+.button-login {
+  margin-left: 20px;
+}
