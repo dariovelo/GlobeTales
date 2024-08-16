@@ -9,10 +9,11 @@
 
 li,
 a,
-button {
+button,
+p {
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 20px;
   color: #edf0f1;
   text-decoration: none;
 }
@@ -44,6 +45,7 @@ header {
     transform 0.3s ease,
     color 0.3s ease; /* Smooth transition effects */
   margin-right: auto; /* sets the logo to the left */
+  background-clip: text;
 }
 
 .nav__links {
@@ -89,4 +91,143 @@ header {
 /* Specific button class for custom styles */
 .button-login {
   margin-left: 20px;
+}
+
+/* Container for the login form */
+.section-form {
+  background-color: #333; /* Dark background for contrast */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  width: 100%;
+  text-align: center; /* Center text within the container */
+  margin: 0 auto; /* Center container horizontally */
+}
+
+/* Form styling */
+.story-form {
+  display: flex;
+  flex-direction: column; /* Stack form elements vertically */
+  align-items: center; /* Center form elements horizontally */
+}
+
+/* Wrapper for input fields */
+.input-box {
+  width: 400px; /* Full width for the input box */
+  margin-bottom: 20px; /* Space between form groups */
+  opacity: 0.5;
+  padding: 15px 0;
+}
+
+/* Style for input elements */
+.input-box input {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+
+  width: 100%; /* Full width input fields */
+  padding: 10px;
+  font-weight: 700; /* Bold text */
+  border: 1px solid #ddd; /* Light border for inputs */
+  border-radius: 10px; /* Rounded corners for inputs */
+  background-color: #fff; /* White background for inputs */
+  color: #333; /* Dark text color for inputs */
+  text-align: center; /* Center the text inside input fields */
+}
+
+.password-visibility {
+  font-style: italic;
+  font-size: small;
+  width: 120px;
+}
+
+.app-footer {
+  background-color: #24252a;
+  color: #edf0f1;
+  padding: 40px 10%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.footer-content {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+}
+
+.category-display {
+  font-size: 24px;
+  color: #f0c040; /* Gold color for the text */
+  text-align: center;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.category-text {
+  animation: fadeInOut 4s infinite;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #444;
+  padding-top: 20px;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.dashboard-container {
+  display: grid;
+  text-align: center;
+  padding: 20px;
+}
+
+.dashboard-category {
+  width: 300px;
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 15px;
+
+  font-family: "Montserrat", sans-serif; /* Consistent font */
+  font-size: 16px; /* Adjust font size */
+  font-weight: 500; /* Medium font weight */
+  padding: 9px 25px; /* Padding for buttons */
+  border: 2px solid #24252a; /* Border color */
+  border-radius: 50px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease; /* Smooth transitions */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline from links */
+  background-color: #b99431; /* Default gold color */
+  color: #24252a; /* Dark text color */
+}
+
+.dashboard-category:hover {
+  background-color: #9e7227; /* Darker gold color for hover effect */
+  transform: scale(1.2); /* Slightly enlarge on hover */
+}
+
+.dashboard-category-title {
+  margin-bottom: 15px;
 }
