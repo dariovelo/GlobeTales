@@ -1,5 +1,7 @@
+/* Import Font */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
+/* Global Styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -18,54 +20,53 @@ p {
   text-decoration: none;
 }
 
+/* Header Styles */
 header {
   display: flex;
-  justify-content: flex-end; /* moves all the items on the right end */
+  justify-content: flex-end; /* Aligns items to the right */
   align-items: center;
   padding: 30px 10%;
 }
 
 .logo {
   font-family: "Montserrat", sans-serif;
-  font-size: 36px; /* Adjust the font size to fit your design */
+  font-size: 36px;
   font-weight: 700; /* Bold text */
   color: #f0c040; /* Gold color for contrast */
   cursor: pointer;
   text-shadow:
     0 4px 6px rgba(0, 0, 0, 0.3),
     0 1px 3px rgba(0, 0, 0, 0.2); /* Multi-layered shadow for depth */
-  background: linear-gradient(
-    45deg,
-    #f0c040,
-    #a8c0ff
-  ); /* Gradient background for dreamy effect */
+  background: linear-gradient(45deg, #f0c040, #a8c0ff);
   -webkit-background-clip: text; /* Clip background to text */
   -webkit-text-fill-color: transparent; /* Make text fill color transparent to show gradient */
   transition:
     transform 0.3s ease,
     color 0.3s ease; /* Smooth transition effects */
-  margin-right: auto; /* sets the logo to the left */
+  margin-right: auto; /* Aligns the logo to the left */
   background-clip: text;
 }
 
 .nav__links {
-  list-style: none; /* removes the listing dots */
+  list-style: none; /* Removes the list bullets */
 }
 
 .nav__links li {
-  display: inline-block; /* the list items were one over the over now they're side by side */
-  padding: 0px 20px; /* 20px space between left and right */
+  display: inline-block; /* Aligns list items side by side */
+  padding: 0px 20px; /* Spacing between items */
 }
 
 .nav__links li a {
-  transition: color 0.3s ease; /* smooth transition effect */
+  transition: color 0.3s ease; /* Smooth color transition */
 }
 
 .nav__links li a:hover {
-  color: #f0c040; /* Gold color for hover effect */
+  color: #f0c040; /* Gold color on hover */
 }
 
-.button {
+/* Button Styles */
+.button,
+.dashboard-category {
   font-family: "Montserrat", sans-serif; /* Consistent font */
   font-size: 16px; /* Adjust font size */
   font-weight: 500; /* Medium font weight */
@@ -82,18 +83,33 @@ header {
   color: #24252a; /* Dark text color */
 }
 
-/* Hover effect for all buttons */
-.button:hover {
-  background-color: #9e7227; /* Darker gold color for hover effect */
-  transform: scale(1.05); /* Slightly enlarge on hover */
-}
-
-/* Specific button class for custom styles */
 .button-login {
   margin-left: 20px;
 }
 
-/* Container for the login form */
+.button:hover,
+.dashboard-category:hover {
+  background-color: #9e7227; /* Darker gold color for hover effect */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.dashboard-category {
+  width: 300px;
+  margin: auto;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #b99431; /* Default gold color */
+}
+
+.dashboard-category:hover {
+  transform: scale(1.2); /* Larger scale on hover */
+}
+
+.dashboard-category-title {
+  margin-bottom: 15px;
+}
+
+/* Form Container Styles */
 .section-form {
   background-color: #333; /* Dark background for contrast */
   border-radius: 8px;
@@ -102,24 +118,54 @@ header {
   width: 100%;
   text-align: center; /* Center text within the container */
   margin: 0 auto; /* Center container horizontally */
+  min-height: 200px;
 }
 
-/* Form styling */
+/* Form Layout */
 .story-form {
   display: flex;
   flex-direction: column; /* Stack form elements vertically */
   align-items: center; /* Center form elements horizontally */
+  width: 100%;
 }
 
-/* Wrapper for input fields */
+/* Input Box Wrapper */
 .input-box {
-  width: 400px; /* Full width for the input box */
+  width: 400px; /* Fixed width for the input box */
+  margin-bottom: 20px; /* Space between form groups */
+  opacity: 0.5;
+  padding: 15px 0;
+}
+.story-title-box {
+  width: 700px; /* Fixed width for the input box */
   margin-bottom: 20px; /* Space between form groups */
   opacity: 0.5;
   padding: 15px 0;
 }
 
-/* Style for input elements */
+.story-content-box {
+  width: 700px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+  padding: 15px 0px;
+  line-height: 500px;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+  font-weight: 700; /* Bold text */
+  border: 1px solid #ddd; /* Light border for inputs */
+  border-radius: 10px; /* Rounded corners for inputs */
+  background-color: #fff; /* White background for inputs */
+  color: #333; /* Dark text color for inputs */
+}
+
+/* Input Field Styles */
 .input-box input {
   font-family:
     ui-monospace,
@@ -130,7 +176,6 @@ header {
     Liberation Mono,
     Courier New,
     monospace;
-
   width: 100%; /* Full width input fields */
   padding: 10px;
   font-weight: 700; /* Bold text */
@@ -140,6 +185,24 @@ header {
   color: #333; /* Dark text color for inputs */
   text-align: center; /* Center the text inside input fields */
 }
+.story-title-box input {
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    Liberation Mono,
+    Courier New,
+    monospace;
+  width: 100%; /* Full width input fields */
+  padding: 10px;
+  font-weight: 700; /* Bold text */
+  border: 1px solid #ddd; /* Light border for inputs */
+  border-radius: 10px; /* Rounded corners for inputs */
+  background-color: #fff; /* White background for inputs */
+  color: #333; /* Dark text color for inputs */
+}
 
 .password-visibility {
   font-style: italic;
@@ -147,6 +210,7 @@ header {
   width: 120px;
 }
 
+/* Footer Styles */
 .app-footer {
   background-color: #24252a;
   color: #edf0f1;
@@ -161,6 +225,7 @@ header {
   height: 100px; /* Adjust as needed */
 }
 
+/* Category Text Display */
 .category-display {
   font-size: 24px;
   color: #f0c040; /* Gold color for the text */
@@ -175,6 +240,7 @@ header {
   animation: fadeInOut 4s infinite;
 }
 
+/* Fade In and Out Animation */
 @keyframes fadeInOut {
   0%,
   100% {
@@ -186,6 +252,7 @@ header {
   }
 }
 
+/* Footer Bottom Styles */
 .footer-bottom {
   text-align: center;
   border-top: 1px solid #444;
@@ -195,39 +262,9 @@ header {
   color: #aaa;
 }
 
+/* Dashboard Container */
 .dashboard-container {
   display: grid;
   text-align: center;
   padding: 20px;
-}
-
-.dashboard-category {
-  width: 300px;
-  margin: auto;
-  padding: 10px;
-  margin-bottom: 15px;
-
-  font-family: "Montserrat", sans-serif; /* Consistent font */
-  font-size: 16px; /* Adjust font size */
-  font-weight: 500; /* Medium font weight */
-  padding: 9px 25px; /* Padding for buttons */
-  border: 2px solid #24252a; /* Border color */
-  border-radius: 50px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease; /* Smooth transitions */
-  text-align: center; /* Center text */
-  text-decoration: none; /* Remove underline from links */
-  background-color: #b99431; /* Default gold color */
-  color: #24252a; /* Dark text color */
-}
-
-.dashboard-category:hover {
-  background-color: #9e7227; /* Darker gold color for hover effect */
-  transform: scale(1.2); /* Slightly enlarge on hover */
-}
-
-.dashboard-category-title {
-  margin-bottom: 15px;
 }

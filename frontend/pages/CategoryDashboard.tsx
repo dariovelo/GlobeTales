@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const categories = {
   Fantasy: "🦄", // Unicorn
@@ -16,10 +16,12 @@ function CategoryDashboard() {
     <div className="dashboard-container">
       <p className="dashboard-category-title">Choose a category</p>
       {Object.entries(categories).map(([category, emoji]) => (
-        <button key={category} className="dashboard-category">
-          {emoji}
-          {category}
-        </button>
+        <Link to={`/${category.toLowerCase()}`}>
+          <button key={category} className="dashboard-category">
+            {emoji}
+            {category}
+          </button>
+        </Link>
       ))}
     </div>
   );

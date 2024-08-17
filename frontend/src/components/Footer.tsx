@@ -28,7 +28,7 @@ function Footer() {
     <footer className="app-footer">
       <div className="footer-content">
         <div className="category-display">
-          <span className="category-text">Write your story: </span>
+          <span className="category-text">Write your story </span>
         </div>
         <div className="category-display">
           <span className="category-text">{categories[currentCategory]}</span>
