@@ -1,7 +1,7 @@
 function StoryForm() {
   return (
     <div className="section-form">
-      <p> Please login </p>
+      <p className="category-title-intro"> Express your narrative </p>
       <form className="story-form">
         <div className="story-title-box">
           <input type="text" placeholder="Note title" />
@@ -13,8 +13,11 @@ function StoryForm() {
           />
         </div>
         <div>
-          <button className="button button-login" type="submit">
-            Login
+          <button className="button button-send-request" type="submit">
+            Send Request
+          </button>
+          <button className="button button-cancel" type="submit">
+            Cancel
           </button>
         </div>
       </form>

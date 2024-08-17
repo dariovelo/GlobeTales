@@ -87,6 +87,20 @@ header {
   margin-left: 20px;
 }
 
+.button-send-request {
+  margin-right: 152px;
+  background-color: forestgreen;
+  width: 168px;
+  height: 58px;
+}
+
+.button-cancel {
+  margin-right: 0px;
+  background-color: darkgrey;
+  width: 168px;
+  height: 58px;
+}
+
 .button:hover,
 .dashboard-category:hover {
   background-color: #9e7227; /* Darker gold color for hover effect */
@@ -148,7 +162,7 @@ header {
   margin-bottom: 20px;
   opacity: 0.5;
   padding: 15px 0px;
-  line-height: 500px;
+  line-height: 163px;
   font-family:
     ui-monospace,
     SFMono-Regular,
@@ -238,6 +252,12 @@ header {
 
 .category-text {
   animation: fadeInOut 4s infinite;
+}
+
+.category-title-intro {
+  font-style: oblique;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 30px;
 }
 
 /* Fade In and Out Animation */
