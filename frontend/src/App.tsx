@@ -1,7 +1,7 @@
 import "./index.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "./components/Header";
+import Header from "../src/components/Header";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import CategoryDashboard from "../pages/CategoryDashboard";

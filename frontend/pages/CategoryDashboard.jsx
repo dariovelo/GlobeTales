@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const categories = {
   Fantasy: "🦄", // Unicorn
@@ -12,6 +15,15 @@ const categories = {
 };
 
 function CategoryDashboard() {
+  const user = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   return (
     <div className="dashboard-container">
       <p className="dashboard-category-title">Choose a category</p>

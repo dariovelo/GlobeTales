@@ -25,12 +25,17 @@ function Register() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      toast.error(message, {
+        autoClose: 500, // 0.5 seconds
+      });
+      dispatch(reset());
+    } else if (isSuccess && user) {
+      toast.success("Registration successful!", {
+        autoClose: 500, // 0.5 seconds
+      });
+      navigate("/");
+      dispatch(reset());
     }
-    if (isSuccess || user) {
-      navigate("/login");
-    }
-    dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
@@ -43,7 +48,7 @@ function Register() {
   const onSubmit = (e) => {
     e.preventDefault(); //prevent the default action to reload the page
     if (password !== password2) {
-      toast.error("Passwords do not matchaaaaa frontend");
+      toast.error("Passwords do not match frontend");
     } else {
       const userData = {
         name,

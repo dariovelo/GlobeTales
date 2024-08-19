@@ -1,11 +1,26 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../src/store/authSlice";
+import Spinner from "../src/components/Spinner";
+
+import { toast } from "react-toastify";
+
+const userLogin = {
+  email: "",
+  password: "",
+};
 
 function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState(userLogin);
+
+  const { email, password } = formData;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -14,9 +29,37 @@ function Login() {
     }));
   };
 
+  useEffect(() => {
+    if (isError) {
+      toast.error(message, {
+        autoClose: 500, // 0.5 seconds
+      });
+    }
+
+    if (isSuccess || user) {
+      toast.success("Login successful!", {
+        autoClose: 500, // 0.5 seconds
+      });
+      navigate("/category");
+    }
+
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
+
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const userData = {
+      email,
+      password,
+    };
+
+    dispatch(login(userData));
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="section-form">
@@ -28,7 +71,7 @@ function Login() {
             placeholder="Email"
             name="email"
             id="email"
-            value={formData.email}
+            value={email}
             onChange={onChange}
           />
         </div>
@@ -38,7 +81,7 @@ function Login() {
             placeholder="Password"
             name="password"
             id="password"
-            value={formData.password}
+            value={password}
             onChange={onChange}
           />
           <button
