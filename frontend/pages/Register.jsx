@@ -1,18 +1,37 @@
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { register, reset } from "../src/store/authSlice";
+import Spinner from "../src/components/Spinner";
 
-interface User {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+const userRegister = {
+  name: "",
+  email: "",
+  password: "",
+  password2: "",
+};
+
 function Register() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [formData, setFormData] = useState(userRegister);
+
+  const { name, email, password, password2 } = formData;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+    if (isSuccess || user) {
+      navigate("/login");
+    }
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -23,7 +42,23 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault(); //prevent the default action to reload the page
+    if (password !== password2) {
+      toast.error("Passwords do not matchaaaaa frontend");
+    } else {
+      const userData = {
+        name,
+        email,
+        password,
+        password2,
+      };
+
+      dispatch(register(userData));
+    }
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="section-form">
@@ -35,7 +70,7 @@ function Register() {
             placeholder="Name"
             id="name"
             name="name"
-            value={formData.name}
+            value={name}
             onChange={onChange}
           />
         </div>
@@ -45,7 +80,7 @@ function Register() {
             placeholder="Email"
             id="email"
             name="email"
-            value={formData.email}
+            value={email}
             onChange={onChange}
           />
         </div>
@@ -55,7 +90,7 @@ function Register() {
             placeholder="Password"
             id="password"
             name="password"
-            value={formData.password}
+            value={password}
             onChange={onChange}
           />
         </div>
@@ -63,9 +98,9 @@ function Register() {
           <input
             type="password"
             placeholder="Confirm password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
+            id="password2"
+            name="password2"
+            value={password2}
             onChange={onChange}
           />
         </div>

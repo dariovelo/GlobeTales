@@ -5,6 +5,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "allowJs": true,
     "noImplicitAny": false,
 
     /* Bundler mode */
@@ -21,5 +22,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "pages/Login.tsx"]
+  "include": ["src", "pages/Login.jsx"]
 }

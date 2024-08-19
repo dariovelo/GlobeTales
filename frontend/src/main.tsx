@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import "@mantine/core/styles.css";
 import App from "./App.tsx";
 import "./index.css";
+import { Provider } from "react-redux";
+import store from "./store/store.jsx";
 import { createTheme, MantineProvider, rem } from "@mantine/core";
 
 const theme = createTheme({
@@ -50,8 +52,10 @@ const theme = createTheme({
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <MantineProvider theme={theme}>
-      <App />
-    </MantineProvider>
+    <Provider store={store}>
+      <MantineProvider theme={theme}>
+        <App />
+      </MantineProvider>
+    </Provider>
   </StrictMode>
 );

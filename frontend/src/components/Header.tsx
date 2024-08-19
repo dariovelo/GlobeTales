@@ -13,18 +13,18 @@ function Header() {
       <nav>
         <ul className="nav__links">
           <li>
-            <a href="#">About</a>
+            <Link to={"/about"}>About</Link>
           </li>
           <li>
-            <a href="#">Contact</a>
+            <Link to={"/contact"}>Contact</Link>
           </li>
         </ul>
       </nav>
-      <a className="cta" href="#">
+      <div className="cta">
         <Link to={buttonLink}>
           <button className="button button-login">{buttonLabel}</button>
         </Link>
-      </a>
+      </div>
     </header>
   );
 }
