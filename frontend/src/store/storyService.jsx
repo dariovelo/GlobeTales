@@ -8,11 +8,29 @@ const createStory = async (storyData, userToken) => {
       Authorization: `Bearer ${userToken}`,
     },
   });
+
+  if (response.data) {
+    localStorage.setItem("story", JSON.stringify(response.data));
+  }
+  return response.data;
+};
+
+const getStory = async (userToken) => {
+  const response = await axios.get(API_URL, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+
+  if (response.data) {
+    localStorage.setItem("story", JSON.stringify(response.data));
+  }
   return response.data;
 };
 
 const storyService = {
   createStory,
+  getStory,
 };
 
 export default storyService;

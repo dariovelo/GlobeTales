@@ -6,7 +6,7 @@ import storyReducer from "../store/storySlice";
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    // story: storyReducer,
+    story: storyReducer,
   },
   // Enable Redux DevTools extension
   devTools: process.env.NODE_ENV !== "production",

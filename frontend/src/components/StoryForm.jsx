@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { createStory, reset } from "../store/storySlice";
+import { createStory, resetStory } from "../store/storySlice";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 const storyInput = {
   title: "",
@@ -52,9 +53,11 @@ function StoryForm() {
           <button className="button button-send-request" type="submit">
             Send Request
           </button>
-          <button className="button button-cancel" type="submit">
-            Cancel
-          </button>
+          <Link to="/category">
+            <button className="button button-cancel" type="submit">
+              Cancel
+            </button>
+          </Link>
         </div>
       </form>
     </div>

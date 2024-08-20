@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../src/store/authSlice";
+import { resetStory, getStory } from "../src/store/storySlice";
 import Spinner from "../src/components/Spinner";
 
 import { toast } from "react-toastify";
@@ -43,7 +44,7 @@ function Login() {
       navigate("/category");
     }
 
-    dispatch(reset());
+    dispatch(getStory());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onSubmit = (e) => {
@@ -55,6 +56,7 @@ function Login() {
     };
 
     dispatch(login(userData));
+    dispatch(getStory());
   };
 
   if (isLoading) {

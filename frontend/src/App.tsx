@@ -8,6 +8,8 @@ import CategoryDashboard from "../pages/CategoryDashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import StoryForm from "./components/StoryForm";
+import StoryDashboard from "../pages/StoryDashboard";
+
 function App() {
   return (
     <>
@@ -18,6 +20,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/category" element={<CategoryDashboard />} />
           <Route path="/fantasy" element={<StoryForm />} />
+          <Route path="/temp" element={<StoryDashboard />} />
         </Routes>
         <Footer />
       </Router>

@@ -4,12 +4,6 @@ const asyncHandler = require("express-async-handler");
 const createStory = asyncHandler(async (req, res) => {
   const { title, category, content } = req.body;
 
-  const storyExists = await Story.findById("66bbc29adb0cc819256bc39a");
-
-  if (storyExists) {
-    return res.status(400).json({ message: "Story already exists" });
-  }
-
   const story = await Story.create({
     title: title,
     category: category,

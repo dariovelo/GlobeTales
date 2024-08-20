@@ -311,3 +311,39 @@ header {
   border-radius: 50%;
   animation: spin 1.2s linear infinite;
 }
+
+.story-article {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  padding: 20px 40px 20px 20px;
+  margin: 10px;
+  max-width: 640px;
+  background-color: #f2f2ef;
+  text-align: center;
+}
+
+.story-title {
+  font-weight: 600;
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 1px;
+  color: #b99431;
+  margin: 1em 0 0;
+}
+
+.story-author {
+  font-weight: 800;
+  font-size: 20px;
+  text-align: center;
+  word-spacing: 2px;
+  color: #816823;
+}
+
+.story-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+  padding: 20px; /* Add some padding around the container */
+}
