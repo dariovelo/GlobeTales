@@ -104,7 +104,7 @@ export const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload?.message || "Registration failed"; // Assuming action.payload contains a message
+        state.message = action.payload?.message || "Login failed"; // Assuming action.payload contains a message
         state.user = null;
       })
       .addCase(logout.fulfilled, (state, action) => {

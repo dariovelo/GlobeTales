@@ -15,18 +15,23 @@ const categories = {
 };
 
 function CategoryDashboard() {
-  const user = useSelector((state) => state.auth);
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
       navigate("/");
+      console.log(`No user`);
     }
   }, [user, navigate]);
 
   return (
     <div className="dashboard-container">
-      <p className="dashboard-category-title">Choose a category</p>
+      <p className="dashboard-category-title">
+        Welcome {user?.name}, choose a category
+      </p>
       {Object.entries(categories).map(([category, emoji]) => (
         <Link to={`/${category.toLowerCase()}`}>
           <button key={category} className="dashboard-category">
