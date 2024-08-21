@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 import { login, reset } from "../src/store/authSlice";
 import { resetStory, getStory } from "../src/store/storySlice";
-import Spinner from "../src/components/Spinner";
-
 import { toast } from "react-toastify";
+import "../src/index.css"; // Make sure to include this CSS file
 
 const userLogin = {
   email: "",
@@ -19,6 +19,7 @@ function Login() {
   const { email, password } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
@@ -32,16 +33,16 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message, {
-        autoClose: 500, // 0.5 seconds
-      });
+      enqueueSnackbar(message, { variant: "error", autoHideDuration: 500 });
     }
 
     if (isSuccess || user) {
-      toast.success("Login successful!", {
-        autoClose: 500, // 0.5 seconds
+      enqueueSnackbar("Login successful!", {
+        variant: "success",
+        autoHideDuration: 500,
       });
-      navigate("/category");
+      console.log("login successful");
+      navigate("/");
     }
 
     dispatch(getStory());
@@ -59,46 +60,45 @@ function Login() {
     dispatch(getStory());
   };
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
   return (
-    <div className="section-form">
-      <p> Please login </p>
-      <form className="story-form" onSubmit={onSubmit}>
-        <div className="input-box">
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={onChange}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type={passwordVisibility ? "text" : "password"}
-            placeholder="Password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={onChange}
-          />
-          <button
-            className="password-visibility"
-            onClick={() => setPasswordVisibility(!passwordVisibility)}
-          >
-            Show password
-          </button>
-        </div>
-        <div>
-          <button className="button button-login" type="submit">
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1 className="auth-title">Login</h1>
+        <form className="auth-form" onSubmit={onSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type={passwordVisibility ? "text" : "password"}
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={onChange}
+            />
+            <button
+              type="button"
+              className="password-visibility"
+              onClick={() => setPasswordVisibility(!passwordVisibility)}
+            >
+              {passwordVisibility ? "Hide" : "Show"} Password
+            </button>
+          </div>
+          <button type="submit" className="button">
             Login
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register, reset } from "../src/store/authSlice";
-import Spinner from "../src/components/Spinner";
+import "../src/index.css"; // Assuming the CSS is separated into a file named Register.css
 
 const userRegister = {
   name: "",
@@ -14,7 +14,6 @@ const userRegister = {
 
 function Register() {
   const [formData, setFormData] = useState(userRegister);
-
   const { name, email, password, password2 } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,14 +24,10 @@ function Register() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message, {
-        autoClose: 500, // 0.5 seconds
-      });
+      toast.error(message, { autoClose: 500 });
       dispatch(reset());
     } else if (isSuccess && user) {
-      toast.success("Registration successful!", {
-        autoClose: 500, // 0.5 seconds
-      });
+      toast.success("Registration successful!", { autoClose: 500 });
       navigate("/");
       dispatch(reset());
     }
@@ -46,76 +41,73 @@ function Register() {
   };
 
   const onSubmit = (e) => {
-    e.preventDefault(); //prevent the default action to reload the page
+    e.preventDefault();
     if (password !== password2) {
-      toast.error("Passwords do not match frontend");
+      toast.error("Passwords do not match");
     } else {
-      const userData = {
-        name,
-        email,
-        password,
-        password2,
-      };
-
+      const userData = { name, email, password };
       dispatch(register(userData));
     }
   };
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   return (
-    <div className="section-form">
-      <p> Please register </p>
-      <form className="story-form" onSubmit={onSubmit}>
-        <div className="input-box">
-          <input
-            type="text"
-            placeholder="Name"
-            id="name"
-            name="name"
-            value={name}
-            onChange={onChange}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="email"
-            placeholder="Email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={onChange}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="password"
-            placeholder="Password"
-            id="password"
-            name="password"
-            value={password}
-            onChange={onChange}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="password"
-            placeholder="Confirm password"
-            id="password2"
-            name="password2"
-            value={password2}
-            onChange={onChange}
-          />
-        </div>
-
-        <div>
-          <button className="button button-login" type="submit">
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1 className="auth-title">Register</h1>
+        <form className="auth-form" onSubmit={onSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              value={name}
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={onChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Confirm password</label>
+            <input
+              type="password"
+              id="password2"
+              name="password2"
+              placeholder="Enter your password"
+              value={password2}
+              onChange={onChange}
+            />
+          </div>
+          <button type="submit" className="button">
             Register
           </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

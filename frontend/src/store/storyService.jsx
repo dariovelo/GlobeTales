@@ -28,9 +28,14 @@ const getStory = async (userToken) => {
   return response.data;
 };
 
+const clearStoryCache = async () => {
+  localStorage.removeItem("story");
+};
+
 const storyService = {
   createStory,
   getStory,
+  clearStoryCache,
 };
 
 export default storyService;

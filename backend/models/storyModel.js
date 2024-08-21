@@ -14,7 +14,7 @@ const storySchema = mongoose.Schema(
     category: {
       type: String,
       enum: ["Fantasy", "Adventure", "Romance", "Mystery", "Thriller"],
-      // required: [true, "Please select a category"],
+      required: [true, "Please select a category"],
     },
     content: {
       type: String,

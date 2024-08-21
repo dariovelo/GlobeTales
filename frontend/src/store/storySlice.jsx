@@ -53,6 +53,25 @@ export const getStory = createAsyncThunk("story/get", async (_, thunkAPI) => {
   }
 });
 
+export const clearStoryCache = createAsyncThunk(
+  "story/clear",
+  async (_, thunkAPI) => {
+    try {
+      return await authService.clearStoryCache();
+    } catch (error) {
+      if (error instanceof Error) {
+        const message =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        return thunkAPI.rejectWithValue(message);
+      }
+    }
+  }
+);
+
 export const storySlice = createSlice({
   name: "story",
   initialState,
@@ -91,6 +110,9 @@ export const storySlice = createSlice({
         state.isError = true;
         state.isLoading = false;
         state.message = action.payload || "Receiving story failed"; // Assuming action.payload contains a message
+      })
+      .addCase(clearStoryCache.fulfilled, (state, action) => {
+        state.story = [];
       });
   },
 });
