@@ -20,11 +20,11 @@ const storySchema = mongoose.Schema(
       type: String,
       required: [true, "Please write a story"],
     },
-    // status: {
-    //   type: String,
-    //   enum: ["Approved", "Pending"],
-    //   default: "Pending",
-    // },
+    status: {
+      type: String,
+      enum: ["published", "draft"],
+      default: "draft", // Default to draft unless explicitly published
+    },
   },
   { timestamps: true, versionKey: false }
 );

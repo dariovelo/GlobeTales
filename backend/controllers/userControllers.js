@@ -8,6 +8,7 @@ const register = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email });
 
   if (password !== password2) {
+    console.log(password, "dssdds", password2);
     return res.status(400).send("Passwords do not match backend");
   }
   if (userExists) {

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useSnackbar } from "notistack";
 import { login, reset } from "../src/store/authSlice";
 import { resetStory, getStory } from "../src/store/storySlice";
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../src/index.css"; // Make sure to include this CSS file
 
 const userLogin = {
@@ -19,7 +19,6 @@ function Login() {
   const { email, password } = formData;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
@@ -33,15 +32,19 @@ function Login() {
 
   useEffect(() => {
     if (isError) {
-      enqueueSnackbar(message, { variant: "error", autoHideDuration: 500 });
+      toast.error(message + " Incorrect password", {
+        autoClose: 1000,
+        position: "top-center",
+      });
+      dispatch(reset());
     }
 
     if (isSuccess || user) {
-      enqueueSnackbar("Login successful!", {
-        variant: "success",
-        autoHideDuration: 500,
+      toast.success("Login successful!", {
+        autoClose: 500,
+        position: "top-center",
       });
-      console.log("login successful");
+
       navigate("/");
     }
 

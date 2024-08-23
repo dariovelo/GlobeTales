@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register, reset } from "../src/store/authSlice";
+import { resetStory } from "../src/store/storySlice";
 import "../src/index.css"; // Assuming the CSS is separated into a file named Register.css
 
 const userRegister = {
@@ -23,13 +24,27 @@ function Register() {
   );
 
   useEffect(() => {
+    if (password !== password2) {
+      toast.error("Passwords do not match!", {
+        autoClose: 1000,
+        position: "top-center",
+      });
+    }
     if (isError) {
-      toast.error(message, { autoClose: 500 });
+      toast.error(message, {
+        autoClose: 1000,
+        position: "top-center",
+      });
       dispatch(reset());
+      dispatch(resetStory());
     } else if (isSuccess && user) {
-      toast.success("Registration successful!", { autoClose: 500 });
+      toast.success("Registration successful!", {
+        autoClose: 500,
+        position: "top-center",
+      });
       navigate("/");
       dispatch(reset());
+      dispatch(resetStory());
     }
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
@@ -45,7 +60,7 @@ function Register() {
     if (password !== password2) {
       toast.error("Passwords do not match");
     } else {
-      const userData = { name, email, password };
+      const userData = { name, email, password, password2 };
       dispatch(register(userData));
     }
   };
@@ -60,7 +75,7 @@ function Register() {
         <h1 className="auth-title">Register</h1>
         <form className="auth-form" onSubmit={onSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Name</label>
+            <label>Name</label>
             <input
               type="text"
               id="name"
@@ -71,7 +86,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label>Email</label>
             <input
               type="email"
               id="email"
@@ -82,7 +97,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label>Password</label>
             <input
               type="password"
               id="password"
@@ -93,7 +108,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Confirm password</label>
+            <label>Confirm password</label>
             <input
               type="password"
               id="password2"

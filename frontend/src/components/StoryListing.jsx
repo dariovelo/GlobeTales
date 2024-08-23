@@ -1,47 +1,69 @@
 import { useState } from "react";
 import { FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import { deleteStory, resetStory } from "../store/storySlice";
 import moment from "moment";
 import "../index.css";
 
-const StoryListing = ({ story }) => {
+const StoryListing = ({ story, userName }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showFullDescription, setShowFullDescription] = useState(false);
+
+  let { content } = story;
 
   const formattedDate = (isoDate) => {
     return moment(isoDate).format("DD-MM-YYYY");
   };
 
-  let description = story.content;
-
   if (!showFullDescription) {
-    description = description.substring(0, 90) + "...";
+    content = content ? content.substring(0, 90) + "..." : "";
   }
 
+  const removeStory = async (story) => {
+    await dispatch(deleteStory(story));
+    dispatch(resetStory());
+    toast.success("Story deleted successfully!", {
+      autoClose: 500,
+      position: "top-center",
+    });
+  };
+
+  const cardClass = `card ${story.category.toLowerCase()}`;
+
   return (
-    <div className="card">
+    <div className={cardClass}>
       <div className="card-content">
-        <div className="card-type">Fantasy</div>
+        <div className="card-category">{story.category}</div>
         <h3 className="card-title">{story.title}</h3>
-        <div className="card-description">{description}</div>
+        <div className="card-description">{content}</div>
 
         <button
           onClick={() => setShowFullDescription((prevState) => !prevState)}
           className="card-toggle"
         >
-          {showFullDescription ? "Less" : "More"}
+          {showFullDescription ? "↑" : "↓"}
         </button>
 
-        <h3 className="card-salary">1000 / Year</h3>
+        <h3 className="card-user">Written by: {userName}</h3>
 
         <div className="card-divider"></div>
 
-        <div className="card-footer">
-          <div className="card-location">
-            <FaClock className="card-location-icon" />
-            {formattedDate(story.createdAt)}
-          </div>
-          <Link to={`/story/${story._id}`} className="card-read-more">
-            Read More
+        <div className="card-time">
+          <FaClock className="card-time-icon" />
+          {formattedDate(story.createdAt)}
+        </div>
+
+        <div>
+          <Link onClick={() => removeStory(story)} className="card-delete">
+            Delete
+          </Link>
+          <Link onClick={() => removeStory(story)} className="card-delete">
+            Delete
           </Link>
         </div>
       </div>

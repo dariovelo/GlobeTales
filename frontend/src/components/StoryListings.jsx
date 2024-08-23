@@ -1,42 +1,40 @@
+// StoryListings.js
 import { useState, useEffect } from "react";
 import StoryListing from "./StoryListing";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import "../index.css";
 
-const StoryListings = ({ isHome = false }) => {
-  const dipatch = useDispatch();
+const StoryListings = ({ currentCategory }) => {
   const { story } = useSelector((state) => state.story);
+  const { user } = useSelector((state) => state.auth);
+  const [filterStories, setFilterStories] = useState([]);
 
-  //   const [jobs, setJobs] = useState([]);
-  //   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    // Filter out unpublished stories
+    const publishedStories = story.filter(
+      (story_) => story_.status === "published"
+    );
 
-  //   useEffect(() => {
-  //     const fetchJobs = async () => {
-  //       const apiUrl = isHome ? "/api/jobs?_limit=3" : "/api/jobs";
-  //       try {
-  //         const res = await fetch(apiUrl);
-  //         const data = await res.json();
-  //         setJobs(data);
-  //       } catch (error) {
-  //         console.log("Error fetching data", error);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
-
-  //     fetchJobs();
-  //   }, [isHome]);
+    // Display all published stories if no category is selected or display filtered published stories
+    if (!currentCategory) {
+      setFilterStories(publishedStories); // Show all published stories
+      console.log("entered all published");
+    } else {
+      const filtered = publishedStories.filter(
+        (story_) => story_.category === currentCategory
+      );
+      setFilterStories(filtered);
+    }
+  }, [currentCategory, story]);
 
   return (
     <section className="storylistings-section">
       <div className="storylistings-container">
-        <h2 className="storylistings-title">
-          {isHome ? "Recent Jobs" : "Browse Jobs"}
-        </h2>
+        <h2 className="storylistings-title">Story Listings</h2>
 
         <div className="storylistings-grid">
-          {story?.map((story_) => (
-            <StoryListing key={story_._id} story={story_} />
+          {filterStories?.map((story_, index) => (
+            <StoryListing key={index} story={story_} userName={user.name} />
           ))}
         </div>
       </div>

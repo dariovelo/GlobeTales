@@ -1,11 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import storyService from "./storyService";
 
-const story = JSON.parse(localStorage.getItem("story"));
+let story = [];
+try {
+  const storedStory = localStorage.getItem("story");
+  story = storedStory ? JSON.parse(storedStory) : [];
+} catch (error) {
+  console.error("Error parsing story from localStorage", error);
+  story = [];
+}
 
 const initialState = {
-  story: story ? story : [],
+  story,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -16,32 +22,13 @@ export const createStory = createAsyncThunk(
   "story/create",
   async (storyData, thunkAPI) => {
     try {
-      if (thunkAPI.getState().auth.user) {
-        const authToken = thunkAPI.getState().auth.user.token;
+      const authToken = thunkAPI.getState().auth.user?.token;
+      if (authToken) {
         return await storyService.createStory(storyData, authToken);
+      } else {
+        return thunkAPI.rejectWithValue("No authentication token available");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        return thunkAPI.rejectWithValue(message);
-      }
-    }
-  }
-);
-
-export const getStory = createAsyncThunk("story/get", async (_, thunkAPI) => {
-  try {
-    if (thunkAPI.getState().auth.user) {
-      const authToken = thunkAPI.getState().auth.user.token;
-      return await storyService.getStory(authToken);
-    }
-  } catch (error) {
-    if (error instanceof Error) {
       const message =
         (error.response &&
           error.response.data &&
@@ -51,23 +38,87 @@ export const getStory = createAsyncThunk("story/get", async (_, thunkAPI) => {
       return thunkAPI.rejectWithValue(message);
     }
   }
-});
+);
+
+export const getStories = createAsyncThunk(
+  "story/getAll",
+  async (_, thunkAPI) => {
+    try {
+      const authToken = thunkAPI.getState().auth.user?.token;
+      if (authToken) {
+        return await storyService.getStories(authToken); // Updated to get multiple stories
+      } else {
+        return thunkAPI.rejectWithValue("No authentication token available");
+      }
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getStory = createAsyncThunk(
+  "story/getSingle",
+  async (id, thunkAPI) => {
+    try {
+      const authToken = thunkAPI.getState().auth.user?.token;
+      if (authToken) {
+        return await storyService.getStory(id, authToken); // Fetch single story by ID
+      } else {
+        return thunkAPI.rejectWithValue("No authentication token available");
+      }
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteStory = createAsyncThunk(
+  "story/delete",
+  async (id, thunkAPI) => {
+    try {
+      const authToken = thunkAPI.getState().auth.user?.token;
+      if (authToken) {
+        return await storyService.deleteStory(id, authToken); // Delete by ID
+      } else {
+        return thunkAPI.rejectWithValue("No authentication token available");
+      }
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const clearStoryCache = createAsyncThunk(
   "story/clear",
   async (_, thunkAPI) => {
     try {
-      return await authService.clearStoryCache();
+      return await storyService.clearStoryCache(); // Adjust if necessary
     } catch (error) {
-      if (error instanceof Error) {
-        const message =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        return thunkAPI.rejectWithValue(message);
-      }
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -96,7 +147,20 @@ export const storySlice = createSlice({
       .addCase(createStory.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload || "Creating story failed"; // Assuming action.payload contains a message
+        state.message = action.payload || "Creating story failed";
+      })
+      .addCase(getStories.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getStories.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.story = action.payload;
+      })
+      .addCase(getStories.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.message = action.payload || "Fetching stories failed";
       })
       .addCase(getStory.pending, (state) => {
         state.isLoading = true;
@@ -104,15 +168,30 @@ export const storySlice = createSlice({
       .addCase(getStory.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.story = action.payload;
+        state.story = [action.payload]; // Assuming a single story is returned
       })
       .addCase(getStory.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload || "Receiving story failed"; // Assuming action.payload contains a message
+        state.message = action.payload || "Fetching story failed";
       })
-      .addCase(clearStoryCache.fulfilled, (state, action) => {
+      .addCase(clearStoryCache.fulfilled, (state) => {
         state.story = [];
+      })
+      .addCase(deleteStory.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteStory.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.story = state.story.filter(
+          (story_) => story_._id !== action.payload._id
+        );
+      })
+      .addCase(deleteStory.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.message = action.payload || "Deleting story failed";
       });
   },
 });

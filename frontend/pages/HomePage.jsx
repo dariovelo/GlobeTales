@@ -8,7 +8,6 @@ function HomePage() {
       {/* hero is the main purple component after the navbar */}
       <Hero />
       <HomeCards />
-      <StoryListings />
     </>
   );
 }
