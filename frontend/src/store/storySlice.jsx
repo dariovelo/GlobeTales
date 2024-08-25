@@ -63,12 +63,12 @@ export const getStories = createAsyncThunk(
 );
 
 export const getStory = createAsyncThunk(
-  "story/getSingle",
-  async (id, thunkAPI) => {
+  "story/get",
+  async (storyData, thunkAPI) => {
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
-        return await storyService.getStory(id, authToken); // Fetch single story by ID
+        return await storyService.getStory(storyData, authToken); // Fetch single story by ID
       } else {
         return thunkAPI.rejectWithValue("No authentication token available");
       }
@@ -86,11 +86,11 @@ export const getStory = createAsyncThunk(
 
 export const deleteStory = createAsyncThunk(
   "story/delete",
-  async (id, thunkAPI) => {
+  async (storyData, thunkAPI) => {
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
-        return await storyService.deleteStory(id, authToken); // Delete by ID
+        return await storyService.deleteStory(storyData, authToken);
       } else {
         return thunkAPI.rejectWithValue("No authentication token available");
       }
@@ -185,7 +185,7 @@ export const storySlice = createSlice({
         state.isSuccess = true;
         state.isLoading = false;
         state.story = state.story.filter(
-          (story_) => story_._id !== action.payload._id
+          (story_) => story_.id !== action.payload.id
         );
       })
       .addCase(deleteStory.rejected, (state, action) => {

@@ -19,7 +19,8 @@ const createStory = async (storyData, userToken) => {
   return response.data;
 };
 
-const deleteStory = async (storyId, userToken) => {
+const deleteStory = async (storyData, userToken) => {
+  let storyId = storyData._id || storyData.id;
   const response = await axios.delete(`${API_URL}${storyId}`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -29,7 +30,7 @@ const deleteStory = async (storyId, userToken) => {
   if (response.data) {
     const existingStories = JSON.parse(localStorage.getItem("story")) || [];
     const updatedStories = Array.isArray(existingStories)
-      ? existingStories.filter((item) => item._id !== storyId)
+      ? existingStories.filter((item) => (item._id || item.id) !== storyId)
       : [];
     localStorage.setItem("story", JSON.stringify(updatedStories));
   } else {

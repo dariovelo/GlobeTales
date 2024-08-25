@@ -37,24 +37,17 @@ const AddStoryPage = () => {
       status: currentStatus, // Use the provided status
     };
 
-    try {
-      await dispatch(createStory(newStory)).unwrap();
-      toast.success(
-        currentStatus === "published"
-          ? "Story Published Successfully"
-          : "Draft Saved Successfully",
-        {
-          autoClose: 500,
-          position: "top-center",
-        }
-      );
-      navigate("/");
-    } catch (error) {
-      toast.error("Failed to save story. Please try again.", {
-        autoClose: 1000,
+    dispatch(createStory(newStory));
+    toast.success(
+      currentStatus === "published"
+        ? "Story Published Successfully"
+        : "Draft Saved Successfully",
+      {
+        autoClose: 500,
         position: "top-center",
-      });
-    }
+      }
+    );
+    navigate("/");
   };
 
   return (

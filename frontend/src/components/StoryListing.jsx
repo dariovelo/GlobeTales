@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaClock } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,12 +25,19 @@ const StoryListing = ({ story, userName }) => {
   }
 
   const removeStory = async (story) => {
-    await dispatch(deleteStory(story));
-    dispatch(resetStory());
-    toast.success("Story deleted successfully!", {
-      autoClose: 500,
-      position: "top-center",
-    });
+    try {
+      await dispatch(deleteStory(story));
+      toast.success("Story deleted successfully!", {
+        autoClose: 500,
+        position: "top-center",
+      });
+      navigate("/");
+    } catch (error) {
+      toast.error("Failed to delete story. Please try again.", {
+        autoClose: 1000,
+        position: "top-center",
+      });
+    }
   };
 
   const cardClass = `card ${story.category.toLowerCase()}`;
@@ -59,12 +66,9 @@ const StoryListing = ({ story, userName }) => {
         </div>
 
         <div>
-          <Link onClick={() => removeStory(story)} className="card-delete">
+          <button onClick={() => removeStory(story)} className="card-delete">
             Delete
-          </Link>
-          <Link onClick={() => removeStory(story)} className="card-delete">
-            Delete
-          </Link>
+          </button>
         </div>
       </div>
     </div>

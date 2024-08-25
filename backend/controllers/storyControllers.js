@@ -71,7 +71,7 @@ const deleteStory = asyncHandler(async (req, res) => {
   }
 
   await story.deleteOne();
-  res.status(200).json({ message: "Story removed" });
+  res.status(200).json({ id: story._id });
 });
 
 module.exports = { createStory, getStories, getStory, deleteStory };
