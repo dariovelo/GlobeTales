@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import Card from "./Card";
+import europeCountries from "../utils/europeCountries";
 import { useEffect, useState } from "react";
-import StoryListings from "./StoryListings";
+import ExperienceListings from "./ExperienceListings";
 import "../index.css";
 
-const categories = ["Fantasy", "Adventure", "Romance", "Mystery", "Thriller"];
-const colors = ["orange", "green", "blue", "yellow", "purple"];
-
 const HomeCards = () => {
-  const [currentCategory, setCurrentCategory] = useState("");
+  const [currentCountry, setCurrentCountry] = useState("");
 
   return (
     <>
@@ -16,25 +14,33 @@ const HomeCards = () => {
         <div className="homecards-container">
           <div className="homecards-grid">
             <Card>
-              <h2 className="homecards-title">Filter by category</h2>
+              <h2 className="homecards-title">Filter by country</h2>
 
-              {categories.map((category, index) => (
-                <Link
-                  onClick={() => {
-                    setCurrentCategory(category);
-                  }}
-                  key={category}
-                  className={`homecards-link ${colors[index]}`}
-                >
-                  {category}
-                </Link>
-              ))}
+              {Object.entries(europeCountries.europeCountryList).map(
+                ([countryCode, countryName], index) => (
+                  <Link
+                    onClick={() => {
+                      setCurrentCountry(countryName);
+                    }}
+                    key={index}
+                    className="homecards-link"
+                  >
+                    <img
+                      src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${countryCode}.svg`}
+                      alt={`${countryName} Flag`}
+                      className="flag-icon"
+                    />
+
+                    {countryName}
+                  </Link>
+                )
+              )}
             </Card>
             <Card bg="bg-indigo-100">
               <h2 className="homecards-title">Share Your Stories</h2>
 
               <Link
-                to="/add-story"
+                to="/add-experience"
                 className="homecards-link homecards-link-indigo"
               >
                 Add Story
@@ -43,7 +49,7 @@ const HomeCards = () => {
           </div>
         </div>
       </section>
-      <StoryListings currentCategory={currentCategory} />
+      <ExperienceListings currentCountry={currentCountry} />
     </>
   );
 };

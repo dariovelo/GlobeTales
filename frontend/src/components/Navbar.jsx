@@ -2,7 +2,10 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../images/logo.png";
 import { useDispatch } from "react-redux";
 import { reset, logout } from "../store/authSlice";
-import { resetStory, clearStoryCache } from "../store/storySlice";
+import {
+  resetExperience,
+  clearExperienceCache,
+} from "../store/experienceSlice";
 import "../index.css";
 
 const Navbar = () => {
@@ -27,9 +30,9 @@ const Navbar = () => {
       navigate("/login");
     } else {
       await dispatch(logout());
-      await dispatch(clearStoryCache());
+      await dispatch(clearExperienceCache());
       dispatch(reset());
-      dispatch(resetStory());
+      dispatch(resetExperience());
       navigate("/login");
       window.location.reload();
     }

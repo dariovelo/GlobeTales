@@ -6,7 +6,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import AddStoryPage from "../pages/AddStoryPage";
+import AddExperience from "../pages/AddExperience";
 import MainLayout from "./layouts/MainLayout";
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
             <Route index element={<HomePage />} />{" "}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/add-story" element={<AddStoryPage />} />
+            <Route path="/add-experience" element={<AddExperience />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>

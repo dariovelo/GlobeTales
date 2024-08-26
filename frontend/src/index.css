@@ -267,12 +267,12 @@
 }
 
 .homecards-link {
-  font-family: "Open Sans";
+  font-family: "Open Sans", sans-serif;
   display: inline-block;
   color: #ffffff;
   border-radius: 0.5rem;
   padding: 10px 20px;
-  font-weight: semi-bold;
+  font-weight: 600; /* Use numeric value for semi-bold */
   transition: all 0.3s ease-in-out;
   text-decoration: none;
   text-align: center;
@@ -280,6 +280,7 @@
   font-size: 14px;
   position: relative;
   overflow: hidden;
+  background-color: #333333; /* Default background color */
 }
 
 .homecards-link::before {
@@ -289,10 +290,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.2); /* Light overlay */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* Light overlay with increased opacity */
   transform: scaleX(0);
   transform-origin: bottom right;
   transition: transform 0.3s ease-in-out;
+  z-index: 1; /* Ensure overlay is on top */
 }
 
 .homecards-link:hover::before {
@@ -301,34 +308,32 @@
 }
 
 .homecards-link:hover {
-  background-color: #2d2d2d; /* Slightly darker gray on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+  background-color: #444444; /* Slightly lighter gray on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow effect */
   transform: scale(1.05); /* Slightly scale up */
+  z-index: 2; /* Ensure button is on top of overlay */
 }
 
-.homecards-link:hover {
-  background-color: #2d2d2d; /* Slightly darker gray on hover */
+.homecards-link::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0) 80%
+  );
+  transition: opacity 0.3s ease-in-out;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 0; /* Ensure it's behind the button text */
 }
 
-/* Dynamic color classes */
-.homecards-link.orange {
-  background-color: #a52a2a; /* red */
-}
-
-.homecards-link.green {
-  background-color: #27ae60; /* green */
-}
-
-.homecards-link.blue {
-  background-color: #3498db; /* blue */
-}
-
-.homecards-link.yellow {
-  background-color: #f1c40f; /* yellow */
-}
-
-.homecards-link.purple {
-  background-color: #9b59b6; /* purple */
+.homecards-link:hover::after {
+  opacity: 1; /* Fade in the radial gradient */
 }
 
 .homecards-link-indigo {
@@ -341,101 +346,47 @@
 }
 
 /* General Card Styles */
-.card {
-  background-color: #5d87a5; /* Default color */
+/* Base Card Styles */
+/* Experience Card */
+.experience-card {
+  background-color: #333; /* Dark background color */
+  color: #fff; /* Light text color for contrast */
   border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease-in-out;
-}
-
-/* Background Color Based on Category */
-.card.fantasy {
-  background-color: #664200; /* Red */
-}
-
-.card.adventure {
-  background-color: #104626; /* Green */
-}
-
-.card.romance {
-  background-color: #103e5c; /* Light Blue */
-}
-
-.card.mystery {
-  background-color: #614f06; /* Yellow */
-}
-
-.card.thriller {
-  background-color: #3f214b; /* Purple */
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out; /* Smooth transition for hover effects */
+  padding: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 /* Hover Animation */
-.card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-/* Card Content */
-.card-content {
-  padding: 1.5rem;
-  display: block;
-  justify-content: center;
+.experience-card:hover {
+  transform: translateY(-10px); /* Slightly lift the card */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
 }
 
 /* Category Text */
-.card-category {
-  color: #ffffff; /* Keep the text color white for contrast */
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.2
-  ); /* Semi-transparent black for shadow effect */
+.experience-category {
+  color: #e0e0e0; /* Light gray for category text */
+  background-color: rgba(0, 0, 0, 0.4); /* Darker semi-transparent background */
   padding: 0.5rem 1rem;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   text-align: center;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
-  font-family: "Times New Roman", Times, serif;
-  font-style: italic;
-  letter-spacing: 0.05em;
-  transition: background-color 0.3s ease-in-out;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Add a subtle box-shadow */
-}
-
-.card-category.fantasy {
-  background-color: rgba(218, 112, 214, 0.2); /* Light purple shadow */
-}
-
-.card-category.adventure {
-  background-color: rgba(46, 139, 87, 0.2); /* Light green shadow */
-}
-
-.card-category.romance {
-  background-color: rgba(255, 105, 180, 0.2); /* Light pink shadow */
-}
-
-.card-category.mystery {
-  background-color: rgba(255, 255, 0, 0.2); /* Light yellow shadow */
-}
-
-.card-category.thriller {
-  background-color: rgba(148, 0, 211, 0.2); /* Light violet shadow */
-}
-
-.card-category:hover {
-  background-color: rgba(0, 0, 0, 0.4); /* Darken the shadow on hover */
+  font-family: "Roboto", sans-serif; /* Consistent font */
 }
 
 /* Title */
-.card-title {
-  font-size: 22px; /* Slightly increased size for emphasis */
+.experience-title {
+  font-size: 20px;
   text-align: center;
-  font-family: "Montserrat";
+  font-family: "Montserrat", sans-serif;
   font-weight: bold;
   color: #ffffff;
   margin-bottom: 1rem;
@@ -443,89 +394,65 @@
 }
 
 /* Description */
-.card-description {
+.experience-description {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: #ffffff;
   font-size: 16px;
   line-height: 1.6;
-  opacity: 0.6; /* Less visible by default */
-  transition: max-height 0.3s ease;
-  max-height: 4.5rem; /* Optional: Limit height to create the 'teaser' effect */
-  overflow: hidden; /* Optional: Hide overflowing text */
-  max-height: 100%;
+  opacity: 0.8; /* Less visible by default */
+  transition: opacity 0.3s ease; /* Smooth transition for visibility */
+  max-height: 4.5rem; /* Limit height for teaser effect */
+  overflow: hidden;
 }
 
-/* Increase visibility on card hover */
-.card:hover .card-description {
-  opacity: 1; /* Fully visible when hovering over the card */
+/* Increase visibility on hover */
+.experience-card:hover .experience-description {
+  opacity: 1; /* Fully visible on hover */
 }
 
-/* More Link */
-.card-toggle {
+/* Toggle Button */
+.experience-toggle {
   background: none;
   border: none;
   color: #ffffff;
-  font-size: 1.2rem; /* Increase font size for better visibility */
+  font-size: 1.2rem;
   font-weight: 500;
   cursor: pointer;
   padding: 0.5rem;
   border-radius: 0.5rem;
   transition:
-    transform 0.2s ease,
-    color 0.3s ease;
+    color 0.3s ease,
+    transform 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto; /* Center the arrow */
+  margin: 0 auto;
 }
 
-.card-toggle:hover {
+/* Hover Effect for Toggle */
+.experience-toggle:hover {
   color: rgba(255, 255, 255, 0.7); /* Lighten color on hover */
   transform: scale(1.1); /* Slightly enlarge on hover */
 }
 
-/* Status */
-.card-status {
-  display: flex;
-  align-items: center;
-  font-size: 0.875rem;
-  color: #4a5568;
-}
-
-/* Status Icons */
-.card-status span {
-  display: block;
-  margin-right: 0.5rem;
-}
-
 /* User Info */
-.card-user {
-  color: #f0f0f0; /* Equivalent to text-indigo-500 */
+.experience-user {
+  color: #f0f0f0;
   margin-bottom: 0.5rem;
-  font-size: 15px;
-  font-style: oblique;
+  font-size: 14px;
+  font-style: italic;
 }
 
 /* Divider */
-.card-divider {
-  border: 1px solid #f3f4f6; /* Equivalent to border-gray-100 */
+.experience-divider {
+  border: 1px solid #444; /* Slightly lighter border color */
   margin-bottom: 1.25rem;
 }
 
-/* Footer */
-.card-footer {
-  background-color: #f8f9fa;
-  padding: 1rem 1.5rem;
-  border-top: 1px solid #e9ecef;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 /* Time Info */
-.card-time {
-  color: #f97316; /* Equivalent to text-orange-700 */
+.experience-time {
+  color: #f97316; /* Orange color for time info */
   margin-bottom: 0.75rem;
   font-size: 0.875rem;
   font-weight: 500;
@@ -533,47 +460,31 @@
 }
 
 /* Time Icon */
-.card-time-icon {
-  font-size: 15px;
+.experience-time-icon {
+  font-size: 16px;
   margin-right: 10px;
 }
 
 /* Delete Button */
-.card-delete {
+.experience-delete {
   display: inline-block;
   background-color: #e74c3c;
   color: #ffffff;
-  padding: 10px 10px;
+  padding: 10px 15px;
   margin-right: 10px;
   border-radius: 0.5rem;
   font-weight: 600;
   text-transform: uppercase;
   transition: all 0.3s ease-in-out;
-  justify-content: center;
-  width: 119px;
   text-align: center;
+  cursor: pointer;
 }
 
-.card-delete:hover {
+/* Hover Effect for Delete Button */
+.experience-delete:hover {
   background-color: #b92929;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
-}
-
-/* Animation Enhancements */
-.card {
-  animation: fadeInUp 0.5s ease-in-out;
-}
-
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .storylistings-section {
@@ -774,4 +685,11 @@
       1fr
     ); /* Same grid layout for larger screens */
   }
+}
+
+.flag-icon {
+  width: 24px; /* Set the desired width */
+  height: auto; /* Maintains aspect ratio */
+  vertical-align: middle; /* Aligns the flag with the text */
+  margin-right: 8px; /* Optional: Adds space between the flag and the text */
 }

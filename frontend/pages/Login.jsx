@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../src/store/authSlice";
-import { resetStory, getStory } from "../src/store/storySlice";
+import { resetExperience, getExperiences } from "../src/store/experienceSlice";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../src/index.css"; // Make sure to include this CSS file
@@ -48,7 +48,7 @@ function Login() {
       navigate("/");
     }
 
-    dispatch(getStory());
+    dispatch(getExperiences());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onSubmit = (e) => {
@@ -60,7 +60,7 @@ function Login() {
     };
 
     dispatch(login(userData));
-    dispatch(getStory());
+    dispatch(getExperiences());
   };
 
   return (

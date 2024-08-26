@@ -1,30 +1,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import storyService from "./storyService";
+import experienceService from "./experienceService"; // Update the service import
 
-let story = [];
+// Initialize state with experiences from localStorage
+let experiences = [];
 try {
-  const storedStory = localStorage.getItem("story");
-  story = storedStory ? JSON.parse(storedStory) : [];
+  const storedExperiences = localStorage.getItem("experiences");
+  experiences = storedExperiences ? JSON.parse(storedExperiences) : [];
 } catch (error) {
-  console.error("Error parsing story from localStorage", error);
-  story = [];
+  console.error("Error parsing experiences from localStorage", error);
+  experiences = [];
 }
 
 const initialState = {
-  story,
+  experiences,
   isError: false,
   isLoading: false,
   isSuccess: false,
   message: "",
 };
 
-export const createStory = createAsyncThunk(
-  "story/create",
-  async (storyData, thunkAPI) => {
+// Thunks to handle async actions
+export const createExperience = createAsyncThunk(
+  "experience/create",
+  async (experienceData, thunkAPI) => {
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
-        return await storyService.createStory(storyData, authToken);
+        return await experienceService.createExperience(
+          experienceData,
+          authToken
+        );
       } else {
         return thunkAPI.rejectWithValue("No authentication token available");
       }
@@ -40,16 +45,11 @@ export const createStory = createAsyncThunk(
   }
 );
 
-export const getStories = createAsyncThunk(
-  "story/getAll",
+export const getExperiences = createAsyncThunk(
+  "experience/getAll",
   async (_, thunkAPI) => {
     try {
-      const authToken = thunkAPI.getState().auth.user?.token;
-      if (authToken) {
-        return await storyService.getStories(authToken); // Updated to get multiple stories
-      } else {
-        return thunkAPI.rejectWithValue("No authentication token available");
-      }
+      return await experienceService.getExperiences(); // Updated to get all experiences
     } catch (error) {
       const message =
         (error.response &&
@@ -62,13 +62,13 @@ export const getStories = createAsyncThunk(
   }
 );
 
-export const getStory = createAsyncThunk(
-  "story/get",
-  async (storyData, thunkAPI) => {
+export const getExperience = createAsyncThunk(
+  "experience/get",
+  async (experienceId, thunkAPI) => {
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
-        return await storyService.getStory(storyData, authToken); // Fetch single story by ID
+        return await experienceService.getExperience(experienceId, authToken); // Fetch single experience by ID
       } else {
         return thunkAPI.rejectWithValue("No authentication token available");
       }
@@ -84,13 +84,16 @@ export const getStory = createAsyncThunk(
   }
 );
 
-export const deleteStory = createAsyncThunk(
-  "story/delete",
-  async (storyData, thunkAPI) => {
+export const deleteExperience = createAsyncThunk(
+  "experience/delete",
+  async (experienceData, thunkAPI) => {
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
-        return await storyService.deleteStory(storyData, authToken);
+        return await experienceService.deleteExperience(
+          experienceData,
+          authToken
+        );
       } else {
         return thunkAPI.rejectWithValue("No authentication token available");
       }
@@ -106,11 +109,11 @@ export const deleteStory = createAsyncThunk(
   }
 );
 
-export const clearStoryCache = createAsyncThunk(
-  "story/clear",
+export const clearExperienceCache = createAsyncThunk(
+  "experience/clear",
   async (_, thunkAPI) => {
     try {
-      return await storyService.clearStoryCache(); // Adjust if necessary
+      return await experienceService.clearExperienceCache(); // Adjust if necessary
     } catch (error) {
       const message =
         (error.response &&
@@ -123,11 +126,12 @@ export const clearStoryCache = createAsyncThunk(
   }
 );
 
-export const storySlice = createSlice({
-  name: "story",
+// Slice for experiences
+export const experienceSlice = createSlice({
+  name: "experience",
   initialState,
   reducers: {
-    resetStory: (state) => {
+    resetExperience: (state) => {
       state.isSuccess = false;
       state.isError = false;
       state.isLoading = false;
@@ -136,66 +140,66 @@ export const storySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createStory.pending, (state) => {
+      .addCase(createExperience.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createStory.fulfilled, (state, action) => {
+      .addCase(createExperience.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.story.push(action.payload);
+        state.experiences.push(action.payload);
       })
-      .addCase(createStory.rejected, (state, action) => {
+      .addCase(createExperience.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload || "Creating story failed";
+        state.message = action.payload || "Creating experience failed";
       })
-      .addCase(getStories.pending, (state) => {
+      .addCase(getExperiences.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getStories.fulfilled, (state, action) => {
+      .addCase(getExperiences.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.story = action.payload;
+        state.experiences = action.payload;
       })
-      .addCase(getStories.rejected, (state, action) => {
+      .addCase(getExperiences.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload || "Fetching stories failed";
+        state.message = action.payload || "Fetching experiences failed";
       })
-      .addCase(getStory.pending, (state) => {
+      .addCase(getExperience.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getStory.fulfilled, (state, action) => {
+      .addCase(getExperience.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.story = [action.payload]; // Assuming a single story is returned
+        state.experiences = [action.payload]; // Assuming a single experience is returned
       })
-      .addCase(getStory.rejected, (state, action) => {
+      .addCase(getExperience.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload || "Fetching story failed";
+        state.message = action.payload || "Fetching experience failed";
       })
-      .addCase(clearStoryCache.fulfilled, (state) => {
-        state.story = [];
+      .addCase(clearExperienceCache.fulfilled, (state) => {
+        state.experiences = [];
       })
-      .addCase(deleteStory.pending, (state) => {
+      .addCase(deleteExperience.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(deleteStory.fulfilled, (state, action) => {
+      .addCase(deleteExperience.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.story = state.story.filter(
-          (story_) => story_.id !== action.payload.id
+        state.experiences = state.experiences.filter(
+          (experience) => experience.id !== action.payload.id
         );
       })
-      .addCase(deleteStory.rejected, (state, action) => {
+      .addCase(deleteExperience.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
-        state.message = action.payload || "Deleting story failed";
+        state.message = action.payload || "Deleting experience failed";
       });
   },
 });
 
-export const { resetStory } = storySlice.actions;
+export const { resetExperience } = experienceSlice.actions;
 
-export default storySlice.reducer;
+export default experienceSlice.reducer;

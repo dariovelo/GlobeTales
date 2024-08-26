@@ -12,5 +12,5 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api/user", require("../backend/routes/userRoutes"));
-app.use("/api/story", require("../backend/routes/storyRoutes"));
+app.use("/api/experiences", require("../backend/routes/experiencesRoutes"));
 app.listen(port, () => console.log(`Server listening on port ${port}`));

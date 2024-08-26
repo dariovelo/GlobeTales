@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register, reset } from "../src/store/authSlice";
-import { resetStory } from "../src/store/storySlice";
+import { resetExperience } from "../src/store/experienceSlice";
 import "../src/index.css"; // Assuming the CSS is separated into a file named Register.css
 
 const userRegister = {
@@ -36,7 +36,7 @@ function Register() {
         position: "top-center",
       });
       dispatch(reset());
-      dispatch(resetStory());
+      dispatch(resetExperience());
     } else if (isSuccess && user) {
       toast.success("Registration successful!", {
         autoClose: 500,
@@ -44,7 +44,7 @@ function Register() {
       });
       navigate("/");
       dispatch(reset());
-      dispatch(resetStory());
+      dispatch(resetExperience());
     }
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 

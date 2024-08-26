@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const storySchema = mongoose.Schema(
+const experienceSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -11,22 +11,16 @@ const storySchema = mongoose.Schema(
       type: String,
       required: [true, "Please insert a title"],
     },
-    category: {
+    country: {
       type: String,
-      enum: ["Fantasy", "Adventure", "Romance", "Mystery", "Thriller"],
-      required: [true, "Please select a category"],
+      required: [true, "Please select a country"],
     },
     content: {
       type: String,
       required: [true, "Please write a story"],
     },
-    status: {
-      type: String,
-      enum: ["published", "draft"],
-      default: "draft", // Default to draft unless explicitly published
-    },
   },
   { timestamps: true, versionKey: false }
 );
 
-module.exports = mongoose.model("Story", storySchema);
+module.exports = mongoose.model("Experience", experienceSchema);

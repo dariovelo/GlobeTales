@@ -1,6 +1,6 @@
 import Hero from "../src/components/Hero";
 import HomeCards from "../src/components/HomeCards";
-import StoryListings from "../src/components/StoryListings";
+import ExperienceListings from "../src/components/ExperienceListings";
 
 function HomePage() {
   return (
