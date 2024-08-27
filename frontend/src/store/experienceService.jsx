@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/experiences/"; // Update API URL
+const API_URL = "http://localhost:5000/api/experiences/";
+const API_URL_USER = "http://localhost:5000/api/user/";
 
-// Create a new experience
 const createExperience = async (experienceData, userToken) => {
   const response = await axios.post(API_URL, experienceData, {
     headers: {
@@ -21,11 +21,7 @@ const createExperience = async (experienceData, userToken) => {
   return response.data;
 };
 
-// Delete an experience by ID
-const deleteExperience = async (experienceData, userToken) => {
-  const experienceId = experienceData.id
-    ? experienceData.id
-    : experienceData._id;
+const deleteExperience = async (experienceId, userToken) => {
   const response = await axios.delete(`${API_URL}${experienceId}`, {
     headers: {
       Authorization: `Bearer ${userToken}`,
@@ -35,22 +31,54 @@ const deleteExperience = async (experienceData, userToken) => {
   if (response.data) {
     const existingExperiences =
       JSON.parse(localStorage.getItem("experiences")) || [];
-    const updatedExperiences = Array.isArray(existingExperiences)
-      ? existingExperiences.filter((item) => item.id !== experienceId)
-      : [];
-    localStorage.setItem("experiences", JSON.stringify(updatedExperiences));
-  } else {
-    console.error(
-      "The experiences in localStorage is not an array or is missing."
+    const updatedExperiences = existingExperiences.filter(
+      (item) => item.experienceId !== experienceId
     );
+    localStorage.setItem("experiences", JSON.stringify(updatedExperiences));
+  }
+  return response.data;
+};
+
+const getUserDetailsById = async (userId, userToken) => {
+  const response = await axios.get(`${API_URL_USER}${userId}`, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+
+  return response.data;
+};
+
+const updateExperience = async (experienceId, experienceData, userToken) => {
+  const response = await axios.put(
+    `${API_URL}${experienceId}`,
+    experienceData,
+    {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    }
+  );
+
+  if (response.data) {
+    // Update local storage to reflect the updated experience
+    const existingExperiences =
+      JSON.parse(localStorage.getItem("experiences")) || [];
+    const updatedExperiences = existingExperiences.map((exp) =>
+      exp.experienceId === experienceId ? response.data : exp
+    );
+    localStorage.setItem("experiences", JSON.stringify(updatedExperiences));
   }
 
   return response.data;
 };
 
-// Get all experiences
 const getExperiences = async (userToken) => {
-  const response = await axios.get(API_URL);
+  const response = await axios.get(API_URL, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
 
   if (response.data) {
     localStorage.setItem("experiences", JSON.stringify(response.data));
@@ -58,7 +86,6 @@ const getExperiences = async (userToken) => {
   return response.data;
 };
 
-// Get a single experience by ID
 const getExperience = async (experienceId, userToken) => {
   const response = await axios.get(`${API_URL}${experienceId}`, {
     headers: {
@@ -66,22 +93,21 @@ const getExperience = async (experienceId, userToken) => {
     },
   });
 
-  if (response.data) {
-    return response.data; // Return the single experience directly
-  }
+  return response.data;
 };
 
-// Clear the experiences cache
 const clearExperienceCache = async () => {
   localStorage.removeItem("experiences");
 };
 
 const experienceService = {
   createExperience,
-  getExperiences, // Fetch all experiences
-  getExperience, // Fetch a single experience by ID
+  getExperiences,
+  getExperience,
   clearExperienceCache,
   deleteExperience,
+  updateExperience,
+  getUserDetailsById,
 };
 
 export default experienceService;

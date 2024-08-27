@@ -46,7 +46,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-inner">
           <NavLink className="navbar-logo" to="/">
-            <h1 className="navbar-logo-text">StoryWeaver</h1>
+            <h1 className="navbar-logo-text">GlobeTales</h1>
           </NavLink>
           <div className="navbar-links-container">
             <div className="navbar-links">

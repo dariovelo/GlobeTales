@@ -17,6 +17,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please enter a password"],
     },
+    visitedCountries: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,

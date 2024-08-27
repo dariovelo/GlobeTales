@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import AddExperience from "../pages/AddExperience";
 import MainLayout from "./layouts/MainLayout";
+import EditExperience from "../pages/EditExperience";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/add-experience" element={<AddExperience />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/experiences/:id" element={<EditExperience />} />
           </Route>
         </Routes>
       </Router>

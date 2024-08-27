@@ -23,7 +23,6 @@ function CategoryDashboard() {
   useEffect(() => {
     if (!user) {
       navigate("/");
-      console.log(`No user`);
     }
   }, [user, navigate]);
 

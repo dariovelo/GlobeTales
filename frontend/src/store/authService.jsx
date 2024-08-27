@@ -26,10 +26,27 @@ const login = async (userData) => {
   return response.data;
 };
 
+const updateVisitedCountries = async (country, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.put(
+    `${API_URL}profile/visited-countries`,
+    { country },
+    config
+  );
+
+  return response.data;
+};
+
 const authService = {
   register,
   logout,
   login,
+  updateVisitedCountries,
 };
 
 export default authService;

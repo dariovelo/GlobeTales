@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import experienceService from "./experienceService"; // Update the service import
+import experienceService from "./experienceService";
 
-// Initialize state with experiences from localStorage
 let experiences = [];
 try {
   const storedExperiences = localStorage.getItem("experiences");
@@ -19,7 +18,6 @@ const initialState = {
   message: "",
 };
 
-// Thunks to handle async actions
 export const createExperience = createAsyncThunk(
   "experience/create",
   async (experienceData, thunkAPI) => {
@@ -34,13 +32,7 @@ export const createExperience = createAsyncThunk(
         return thunkAPI.rejectWithValue("No authentication token available");
       }
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -49,15 +41,11 @@ export const getExperiences = createAsyncThunk(
   "experience/getAll",
   async (_, thunkAPI) => {
     try {
-      return await experienceService.getExperiences(); // Updated to get all experiences
+      return await experienceService.getExperiences(
+        thunkAPI.getState().auth.user?.token
+      );
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -68,29 +56,43 @@ export const getExperience = createAsyncThunk(
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
-        return await experienceService.getExperience(experienceId, authToken); // Fetch single experience by ID
+        return await experienceService.getExperience(experienceId, authToken);
       } else {
         return thunkAPI.rejectWithValue("No authentication token available");
       }
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
 export const deleteExperience = createAsyncThunk(
   "experience/delete",
-  async (experienceData, thunkAPI) => {
+  async (experienceId, thunkAPI) => {
     try {
       const authToken = thunkAPI.getState().auth.user?.token;
       if (authToken) {
         return await experienceService.deleteExperience(
+          experienceId,
+          authToken
+        );
+      } else {
+        return thunkAPI.rejectWithValue("No authentication token available");
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateExperience = createAsyncThunk(
+  "experience/update",
+  async ({ experienceId, experienceData }, thunkAPI) => {
+    try {
+      const authToken = thunkAPI.getState().auth.user?.token;
+      if (authToken) {
+        return await experienceService.updateExperience(
+          experienceId,
           experienceData,
           authToken
         );
@@ -98,13 +100,23 @@ export const deleteExperience = createAsyncThunk(
         return thunkAPI.rejectWithValue("No authentication token available");
       }
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchUserDetailsById = createAsyncThunk(
+  "experience/fetchUserDetailsById",
+  async (userId, thunkAPI) => {
+    try {
+      const authToken = thunkAPI.getState().auth.user?.token;
+      if (authToken) {
+        return await experienceService.getUserDetailsById(userId, authToken);
+      } else {
+        return thunkAPI.rejectWithValue("No authentication token available");
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -113,20 +125,13 @@ export const clearExperienceCache = createAsyncThunk(
   "experience/clear",
   async (_, thunkAPI) => {
     try {
-      return await experienceService.clearExperienceCache(); // Adjust if necessary
+      return await experienceService.clearExperienceCache();
     } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-// Slice for experiences
 export const experienceSlice = createSlice({
   name: "experience",
   initialState,
@@ -172,15 +177,12 @@ export const experienceSlice = createSlice({
       .addCase(getExperience.fulfilled, (state, action) => {
         state.isSuccess = true;
         state.isLoading = false;
-        state.experiences = [action.payload]; // Assuming a single experience is returned
+        state.experiences = [action.payload];
       })
       .addCase(getExperience.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.message = action.payload || "Fetching experience failed";
-      })
-      .addCase(clearExperienceCache.fulfilled, (state) => {
-        state.experiences = [];
       })
       .addCase(deleteExperience.pending, (state) => {
         state.isLoading = true;
@@ -189,13 +191,45 @@ export const experienceSlice = createSlice({
         state.isSuccess = true;
         state.isLoading = false;
         state.experiences = state.experiences.filter(
-          (experience) => experience.id !== action.payload.id
+          (experience) => experience.experienceId !== action.payload.id
         );
       })
       .addCase(deleteExperience.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.message = action.payload || "Deleting experience failed";
+      })
+      .addCase(updateExperience.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateExperience.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+        state.experiences = state.experiences.map((experience) =>
+          experience.experienceId === action.payload.experienceId
+            ? action.payload
+            : experience
+        );
+      })
+      .addCase(updateExperience.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.message = action.payload || "Updating experience failed";
+      })
+      .addCase(clearExperienceCache.fulfilled, (state) => {
+        state.experiences = [];
+      })
+      .addCase(fetchUserDetailsById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchUserDetailsById.fulfilled, (state, action) => {
+        state.isSuccess = true;
+        state.isLoading = false;
+      })
+      .addCase(fetchUserDetailsById.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.message = action.payload || "Fetching user details failed";
       });
   },
 });

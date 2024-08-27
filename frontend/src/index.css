@@ -90,7 +90,7 @@
   font-size: 1.1rem;
 }
 
-.button-publish-story {
+.button-submit {
   background-color: #3498db;
   color: white;
   font-weight: 600;
@@ -345,149 +345,182 @@
   background-color: #434190; /* hover:bg-indigo-700 */
 }
 
+.clear-filter {
+  display: inline-block;
+  background-color: #3498db;
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  margin-top: 1rem;
+}
+
+.clear-filter:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
 /* General Card Styles */
 /* Base Card Styles */
 /* Experience Card */
-.experience-card {
-  background-color: #333; /* Dark background color */
-  color: #fff; /* Light text color for contrast */
-  border-radius: 1rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+.experience-card-x {
+  background-color: #2c3e50; /* Darker, more muted background */
+  color: #ecf0f1; /* Softer white for better readability */
+  border-radius: 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: hidden;
-  transition:
-    transform 0.3s ease-in-out,
-    box-shadow 0.3s ease-in-out; /* Smooth transition for hover effects */
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
-/* Hover Animation */
-.experience-card:hover {
-  transform: translateY(-10px); /* Slightly lift the card */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+.experience-card-x:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
 
-/* Category Text */
-.experience-category {
-  color: #e0e0e0; /* Light gray for category text */
-  background-color: rgba(0, 0, 0, 0.4); /* Darker semi-transparent background */
-  padding: 0.5rem 1rem;
-  font-size: 14px;
+.experience-category-x {
+  color: #bdc3c7;
+  background-color: rgba(52, 73, 94, 0.7);
+  padding: 0.6rem 1.2rem;
+  font-size: 0.85rem;
   font-weight: 600;
   text-align: center;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
+  border-radius: 2rem;
+  margin-bottom: 1.2rem;
   text-transform: uppercase;
-  font-family: "Roboto", sans-serif; /* Consistent font */
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.5px;
 }
 
-/* Title */
-.experience-title {
-  font-size: 20px;
+.experience-title-x {
+  font-size: 1.4rem;
   text-align: center;
   font-family: "Montserrat", sans-serif;
-  font-weight: bold;
-  color: #ffffff;
-  margin-bottom: 1rem;
+  font-weight: 700;
+  color: #3498db; /* Highlight color for title */
+  margin-bottom: 1.2rem;
   line-height: 1.4;
 }
 
-/* Description */
-.experience-description {
+.experience-description-x {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
-  color: #ffffff;
-  font-size: 16px;
+  color: #ecf0f1;
+  font-size: 1rem;
   line-height: 1.6;
-  opacity: 0.8; /* Less visible by default */
-  transition: opacity 0.3s ease; /* Smooth transition for visibility */
-  max-height: 4.5rem; /* Limit height for teaser effect */
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  max-height: 4.8rem;
   overflow: hidden;
 }
 
-/* Increase visibility on hover */
-.experience-card:hover .experience-description {
-  opacity: 1; /* Fully visible on hover */
+.experience-card-x:hover .experience-description-x {
+  opacity: 1;
+  max-height: none;
 }
 
-/* Toggle Button */
-.experience-toggle {
-  background: none;
+.experience-toggle-x {
+  background: rgba(52, 152, 219, 0.1);
   border: none;
-  color: #ffffff;
-  font-size: 1.2rem;
+  color: #3498db;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition:
-    color 0.3s ease,
-    transform 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  margin: 1rem auto 0;
 }
 
-/* Hover Effect for Toggle */
-.experience-toggle:hover {
-  color: rgba(255, 255, 255, 0.7); /* Lighten color on hover */
-  transform: scale(1.1); /* Slightly enlarge on hover */
+.experience-toggle-x:hover {
+  background: rgba(52, 152, 219, 0.2);
+  color: #2980b9;
+  transform: translateY(-2px);
 }
 
-/* User Info */
-.experience-user {
-  color: #f0f0f0;
-  margin-bottom: 0.5rem;
-  font-size: 14px;
+.experience-user-x {
+  color: #95a5a6;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
   font-style: italic;
 }
 
-/* Divider */
-.experience-divider {
-  border: 1px solid #444; /* Slightly lighter border color */
-  margin-bottom: 1.25rem;
+.experience-divider-x {
+  border: 1px solid #34495e;
+  margin: 1.5rem 0;
 }
 
-/* Time Info */
 .experience-time {
-  color: #f97316; /* Orange color for time info */
-  margin-bottom: 0.75rem;
-  font-size: 0.875rem;
+  color: #e67e22; /* Warmer orange */
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
   font-weight: 500;
   text-align: center;
 }
 
-/* Time Icon */
-.experience-time-icon {
-  font-size: 16px;
-  margin-right: 10px;
+.experience-time-icon-x {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
 }
 
-/* Delete Button */
-.experience-delete {
+.experience-actions-x {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.experience-edit-x,
+.experience-delete-x {
   display: inline-block;
-  background-color: #e74c3c;
-  color: #ffffff;
-  padding: 10px 15px;
-  margin-right: 10px;
-  border-radius: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  margin-right: 1rem;
+  border-radius: 2rem;
   font-weight: 600;
+  font-size: 17px;
   text-transform: uppercase;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   text-align: center;
   cursor: pointer;
 }
 
-/* Hover Effect for Delete Button */
-.experience-delete:hover {
-  background-color: #b92929;
+.experience-edit-x {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+}
+
+.experience-edit-x:hover {
+  background-color: #2980b9;
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
 }
 
-.storylistings-section {
+.experience-delete-x {
+  background-color: #e74c3c;
+  color: #ffffff;
+  border: none;
+}
+
+.experience-delete-x:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.experience-list-section {
   background-color: #323647; /* bg-blue-50 */
   padding-left: 1rem; /* px-4 */
   padding-right: 1rem; /* px-4 */
@@ -495,12 +528,12 @@
   padding-bottom: 2.5rem; /* py-10 */
 }
 
-.storylistings-container {
+.experience-list-container {
   margin: auto;
   max-width: 1280px;
 }
 
-.storylistings-title {
+.experience-list-title {
   font-size: 1.875rem;
   font-weight: 700;
   color: lightcyan;
@@ -508,23 +541,23 @@
   text-align: center;
 }
 
-.storylistings-grid {
+.experience-list-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
-.storylistings-grid > * {
+.experience-list-grid > * {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
 @media (min-width: 768px) {
-  .storylistings-grid {
+  .experience-list-grid {
     grid-template-columns: repeat(3, 1fr); /* md:grid-cols-3 */
   }
 }
 
 /* Book Page Styles */
-.book-container {
+.experience-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -533,7 +566,7 @@
   padding: 1rem;
 }
 
-.book-card {
+.experience-card {
   background: #fff;
   padding: 2rem;
   border: 1px solid #dcdcdc;
@@ -544,7 +577,7 @@
   position: relative;
 }
 
-.book-card::before {
+.experience-card::before {
   content: "";
   position: absolute;
   top: 0;
@@ -565,7 +598,7 @@
   text-align: center;
 }
 
-.book-form {
+.experience-form {
   display: flex;
   flex-direction: column;
 }
@@ -574,7 +607,7 @@
   margin-bottom: 1.5rem;
 }
 
-.book-label {
+.form-label {
   font-size: 1.1rem;
   font-weight: 600;
   color: #4a4a4a;
@@ -582,9 +615,9 @@
   display: block;
 }
 
-.book-select,
-.book-input,
-.book-textarea {
+.form-select,
+.form-input,
+.form-textarea {
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #dcdcdc;
@@ -595,25 +628,26 @@
   box-sizing: border-box;
 }
 
-.book-select:focus,
-.book-input:focus,
-.book-textarea:focus {
+.form-select:focus,
+.form-input:focus,
+.form-textarea:focus {
   border-color: #a68c49;
   outline: none;
 }
 
-.book-textarea {
+.form-textarea {
   resize: vertical;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   margin-top: 1rem;
 }
 
 .button-save-draft,
-.button-publish-story {
+.button-submit {
   background-color: #a68c49;
   color: #ffffff;
   padding: 0.75rem 1.5rem;
@@ -636,12 +670,12 @@
   background-color: #8f8f6e;
 }
 
-.button-publish-story:hover {
+.button-submit:hover {
   background-color: #8f6e3d;
 }
 
 .button-save-draft:hover,
-.button-publish-story:hover {
+.button-submit:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -692,4 +726,30 @@
   height: auto; /* Maintains aspect ratio */
   vertical-align: middle; /* Aligns the flag with the text */
   margin-right: 8px; /* Optional: Adds space between the flag and the text */
+}
+
+.visited-countries-container {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.visited-countries {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.country-tag {
+  background-color: #003366;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.country-tag:hover {
+  background-color: #002244;
 }

@@ -19,6 +19,11 @@ const experienceSchema = mongoose.Schema(
       type: String,
       required: [true, "Please write a story"],
     },
+    experienceId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      unique: true, // Ensure that each experienceId is unique
+    },
   },
   { timestamps: true, versionKey: false }
 );

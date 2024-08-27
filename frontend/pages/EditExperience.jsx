@@ -1,23 +1,46 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { countries } from "countries-list";
 import europeCountries from "../src/utils/europeCountries";
-import { createExperience } from "../src/store/experienceSlice";
+import {
+  updateExperience,
+  getExperience,
+  getExperiences,
+} from "../src/store/experienceSlice";
 import "react-toastify/dist/ReactToastify.css";
 import "../src/index.css";
 
-const AddExperience = () => {
+const EditExperience = () => {
+  const { id: experienceId } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [content, setContent] = useState("");
-  const [error, setError] = useState(null);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const experience = useSelector((state) =>
+    state.experience.experiences.find(
+      (exp) => exp.experienceId === experienceId
+    )
+  );
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    if (experienceId) {
+      dispatch(getExperience(experienceId));
+    }
+  }, [dispatch, experienceId]);
+
+  useEffect(() => {
+    if (experience) {
+      setTitle(experience.title);
+      setSelectedCountry(experience.country);
+      setContent(experience.content);
+    }
+  }, [experience]);
+
+  const handleUpdate = () => {
     if (!title || !content || !selectedCountry) {
       toast.error("All fields are required!", {
         autoClose: 1000,
@@ -26,14 +49,17 @@ const AddExperience = () => {
       return;
     }
 
-    const newExperience = {
+    const updatedExperience = {
       title,
       country: selectedCountry,
       content,
     };
 
-    dispatch(createExperience(newExperience));
-    toast.success("Experience published successfully", {
+    dispatch(
+      updateExperience({ experienceId, experienceData: updatedExperience })
+    );
+    dispatch(getExperiences());
+    toast.success("Experience updated successfully", {
       autoClose: 500,
       position: "top-center",
     });
@@ -44,7 +70,7 @@ const AddExperience = () => {
     <div className="experience-container">
       <div className="experience-card">
         <form className="experience-form" onSubmit={(e) => e.preventDefault()}>
-          <h2 className="experience-title">Add Your Story</h2>
+          <h2 className="experience-title">Edit Your Experience</h2>
 
           <div className="form-group">
             <label className="form-label">Country</label>
@@ -100,9 +126,9 @@ const AddExperience = () => {
             <button
               className="button-submit"
               type="button"
-              onClick={handleSubmit}
+              onClick={handleUpdate}
             >
-              Publish Story
+              Update Experience
             </button>
           </div>
         </form>
@@ -111,4 +137,4 @@ const AddExperience = () => {
   );
 };
 
-export default AddExperience;
+export default EditExperience;
