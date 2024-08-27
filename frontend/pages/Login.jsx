@@ -1,38 +1,56 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { login, reset } from "../src/store/authSlice";
 import { resetExperience, getExperiences } from "../src/store/experienceSlice";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "../src/index.css"; // Make sure to include this CSS file
+import "../src/index.css";
 
-const userLogin = {
+// Initial user login state
+const initialUserLoginState = {
   email: "",
   password: "",
 };
 
 function Login() {
+  // State for form data and password visibility
+  const [formData, setFormData] = useState(initialUserLoginState);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const [formData, setFormData] = useState(userLogin);
 
+  // Destructuring email and password from formData
   const { email, password } = formData;
+
+  // Initialize navigation and dispatch hooks
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Select auth state from Redux store
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
-  const onChange = (e) => {
+  // Handle form field changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
 
+  // Handle form submission
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const userData = { email, password };
+    dispatch(login(userData));
+    dispatch(getExperiences());
+  };
+
+  // Effect to handle login results and navigation
   useEffect(() => {
     if (isError) {
-      toast.error(message + " Incorrect password", {
+      toast.error(`${message} Incorrect password`, {
         autoClose: 1000,
         position: "top-center",
       });
@@ -44,30 +62,17 @@ function Login() {
         autoClose: 500,
         position: "top-center",
       });
-
       navigate("/");
     }
 
     dispatch(getExperiences());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-    const userData = {
-      email,
-      password,
-    };
-
-    dispatch(login(userData));
-    dispatch(getExperiences());
-  };
-
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1 className="auth-title">Login</h1>
-        <form className="auth-form" onSubmit={onSubmit}>
+        <form className="auth-form" onSubmit={handleFormSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
@@ -76,7 +81,7 @@ function Login() {
               name="email"
               placeholder="Enter your email"
               value={email}
-              onChange={onChange}
+              onChange={handleInputChange}
             />
           </div>
           <div className="form-group">
@@ -87,7 +92,7 @@ function Login() {
               name="password"
               placeholder="Enter your password"
               value={password}
-              onChange={onChange}
+              onChange={handleInputChange}
             />
             <button
               type="button"

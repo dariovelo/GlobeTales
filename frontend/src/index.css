@@ -203,12 +203,12 @@
   display: flex;
 }
 
-.hero-section {
-  background-color: #2b2f3a; /* Darker indigo for hero section */
+.pagebanner-section {
+  background-color: #2b2f3a; /* Darker indigo for pagebanner section */
   margin-bottom: 1rem;
 }
 
-.hero-container {
+.pagebanner-container {
   max-width: 7xl;
   padding-left: 16px;
   padding-right: 16px;
@@ -219,11 +219,11 @@
   align-items: center;
 }
 
-.hero-content {
+.pagebanner-content {
   text-align: center;
 }
 
-.hero-title {
+.pagebanner-title {
   font-family: "Montserrat";
   color: #ffffff;
   font-size: 32px;
@@ -231,29 +231,26 @@
   letter-spacing: 1px;
 }
 
-.hero-subtitle {
+.pagebanner-subtitle {
   margin-top: 1rem;
   margin-bottom: 1rem;
   color: white;
   font-size: 1.25rem;
 }
 
-.homecards-section {
-}
-
-.homecards-container {
+.countryfilter-container {
   padding-left: 16px;
   padding-right: 16px;
   background-color: #2b2f3a;
   margin-top: -19px;
 }
 
-.homecards-grid {
+.countryfilter-grid {
   display: block;
   text-align: center;
 }
 
-.homecards-title {
+.countryfilter-title {
   font-family: "Roboto";
   font-weight: medium;
   font-size: 23px;
@@ -266,7 +263,7 @@
   color: white;
 }
 
-.homecards-link {
+.countryfilter-link {
   font-family: "Open Sans", sans-serif;
   display: inline-block;
   color: #ffffff;
@@ -283,7 +280,7 @@
   background-color: #333333; /* Default background color */
 }
 
-.homecards-link::before {
+.countryfilter-link::before {
   content: "";
   position: absolute;
   top: 0;
@@ -302,19 +299,19 @@
   z-index: 1; /* Ensure overlay is on top */
 }
 
-.homecards-link:hover::before {
+.countryfilter-link:hover::before {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
 
-.homecards-link:hover {
+.countryfilter-link:hover {
   background-color: #444444; /* Slightly lighter gray on hover */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow effect */
   transform: scale(1.05); /* Slightly scale up */
   z-index: 2; /* Ensure button is on top of overlay */
 }
 
-.homecards-link::after {
+.countryfilter-link::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -332,11 +329,11 @@
   z-index: 0; /* Ensure it's behind the button text */
 }
 
-.homecards-link:hover::after {
+.countryfilter-link:hover::after {
   opacity: 1; /* Fade in the radial gradient */
 }
 
-.homecards-link-indigo {
+.countryfilter-link-indigo {
   background-color: #6c63ff; /* bg-indigo-600 */
   font-size: large;
 }
@@ -462,7 +459,7 @@
   margin: 1.5rem 0;
 }
 
-.experience-time {
+.experience-time-x {
   color: #e67e22; /* Warmer orange */
   margin-bottom: 1rem;
   font-size: 0.95rem;
@@ -752,4 +749,82 @@
 
 .country-tag:hover {
   background-color: #002244;
+}
+
+.about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e6e8f0; /* Light gray background */
+  padding: 2rem;
+}
+
+.about-card {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+}
+
+.about-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.about-description {
+  font-size: 1.1rem;
+  color: #34495e;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.about-section {
+  background-color: #f9f9f9; /* Slightly off-white background */
+  padding: 2rem;
+}
+
+.about-content {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+}
+
+.about-image {
+  border-radius: 50%;
+  max-width: 150px;
+  margin-bottom: 1rem;
+  border: 3px solid #3498db; /* Highlight border color */
+}
+
+.about-link {
+  color: #3498db;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.about-link:hover {
+  color: #2980b9;
+}
+
+@media (min-width: 768px) {
+  .about-title {
+    font-size: 2.5rem;
+  }
+
+  .about-description {
+    font-size: 1.2rem;
+  }
 }

@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register, reset } from "../src/store/authSlice";
 import { resetExperience } from "../src/store/experienceSlice";
-import "../src/index.css"; // Assuming the CSS is separated into a file named Register.css
+import "../src/index.css";
 
-const userRegister = {
+// Initial state for user registration
+const initialState = {
   name: "",
   email: "",
   password: "",
@@ -14,15 +15,20 @@ const userRegister = {
 };
 
 function Register() {
-  const [formData, setFormData] = useState(userRegister);
+  // State for form data
+  const [formData, setFormData] = useState(initialState);
   const { name, email, password, password2 } = formData;
+
+  // Hooks for navigation and dispatch
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // Redux state
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
+  // Effect to handle side effects
   useEffect(() => {
     if (password !== password2) {
       toast.error("Passwords do not match!", {
@@ -30,6 +36,7 @@ function Register() {
         position: "top-center",
       });
     }
+
     if (isError) {
       toast.error(message, {
         autoClose: 1000,
@@ -46,8 +53,18 @@ function Register() {
       dispatch(reset());
       dispatch(resetExperience());
     }
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, [
+    password,
+    password2,
+    isError,
+    isSuccess,
+    user,
+    message,
+    navigate,
+    dispatch,
+  ]);
 
+  // Handle form input changes
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -55,6 +72,7 @@ function Register() {
     }));
   };
 
+  // Handle form submission
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
@@ -65,17 +83,13 @@ function Register() {
     }
   };
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1 className="auth-title">Register</h1>
         <form className="auth-form" onSubmit={onSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               id="name"
@@ -86,7 +100,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label>Email</label>
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
@@ -97,7 +111,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
@@ -108,12 +122,12 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label>Confirm password</label>
+            <label htmlFor="password2">Confirm password</label>
             <input
               type="password"
               id="password2"
               name="password2"
-              placeholder="Enter your password"
+              placeholder="Confirm your password"
               value={password2}
               onChange={onChange}
             />

@@ -1,12 +1,11 @@
-import Hero from "../src/components/Hero";
-import HomeCards from "../src/components/HomeCards";
+import PageBanner from "../src/components/PageBanner";
+import CountryFilter from "../src/components/CountryFilter";
 
 function HomePage() {
   return (
     <>
-      {/* hero is the main purple component after the navbar */}
-      <Hero />
-      <HomeCards />
+      <PageBanner />
+      <CountryFilter />
     </>
   );
 }

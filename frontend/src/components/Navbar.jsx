@@ -1,5 +1,4 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import logo from "../images/logo.png";
 import { useDispatch } from "react-redux";
 import { reset, logout } from "../store/authSlice";
 import {
@@ -13,20 +12,21 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Determine the button name based on the current route
-  const buttonName =
+  // Determine the button text based on the current route
+  const buttonText =
     location.pathname === "/login"
       ? "Register"
       : location.pathname === "/register"
         ? "Login"
         : "Logout";
 
-  const onClick = async (e) => {
+  // Handle button click for login, register, or logout
+  const handleButtonClick = async (e) => {
     e.preventDefault();
 
-    if (buttonName === "Register") {
+    if (buttonText === "Register") {
       navigate("/register");
-    } else if (buttonName === "Login") {
+    } else if (buttonText === "Login") {
       navigate("/login");
     } else {
       await dispatch(logout());
@@ -38,7 +38,8 @@ const Navbar = () => {
     }
   };
 
-  const linkClass = ({ isActive }) =>
+  // Function to set link class based on active state
+  const getLinkClass = ({ isActive }) =>
     isActive ? "navbar-link navbar-link-active" : "navbar-link";
 
   return (
@@ -50,14 +51,21 @@ const Navbar = () => {
           </NavLink>
           <div className="navbar-links-container">
             <div className="navbar-links">
-              <NavLink to="/" className={linkClass}>
+              <NavLink to="/" className={getLinkClass}>
                 Home
               </NavLink>
-              <NavLink to="/profile" className={linkClass}>
+              <NavLink to="/profile" className={getLinkClass}>
                 Profile
               </NavLink>
-              <NavLink className="navbar-link" to="/" onClick={onClick}>
-                {buttonName}
+              <NavLink to="/about" className={getLinkClass}>
+                About
+              </NavLink>
+              <NavLink
+                className="navbar-link"
+                to="/"
+                onClick={handleButtonClick}
+              >
+                {buttonText}
               </NavLink>
             </div>
           </div>
