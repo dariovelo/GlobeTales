@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/user/";
+const API_URL = "https://globetales-backend.onrender.com/api/user/";
 
 const register = async (userData) => {
   const response = await axios.post(API_URL + "register", userData);
