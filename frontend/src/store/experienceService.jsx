@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/experiences/";
-const API_URL_USER = "http://localhost:5000/api/user/";
+const API_URL = "https://globetales-backend.onrender.com/api/experiences/";
+const API_URL_USER = "https://globetales-backend.onrender.com/api/user/";
 
 const createExperience = async (experienceData, userToken) => {
   const response = await axios.post(API_URL, experienceData, {
